@@ -1,0 +1,54 @@
+WeatherRoot: # Main interface
+
+<WeatherRoot>: # Main widget
+    AddLocationForm:
+
+
+# Customer widgets
+<AddLocationForm>:
+    orientation: "vertical"
+    search_input: search_box
+    search_results: search_results_list
+    BoxLayout:
+        size_hint: (1., None)
+        height: "40dp"
+        TextInput:
+            id: search_box
+            size_hint: (.5, 1)
+            multiline: False
+            focus: True
+            hint_text: "Search by location name or gps coordinates"
+            on_text_validate: root.on_search_btn_pressed
+
+        Button:
+            id: search_btn
+            size_hint: (.25, 1)
+            text: "Search"
+            on_press: root.on_search_btn_pressed()
+        Button:
+            id: location_btn
+            size_hint: (.25, 1)
+            text: "Current location"
+            on_press: root.on_location_btn_pressed()
+    RV: # Recycle view replace ListView
+        id:search_results_list
+
+<RV>:
+    viewclass: 'SelectableLabel'
+    SelectableRecycleBoxLayout:
+        default_size: None, dp(56)
+        default_size_hint: 1, None
+        size_hint_y: None
+        height: self.minimum_height
+        orientation: 'vertical'
+        multiselect: False
+        touch_multiselect: False
+
+<SelectableLabel>:
+    canvas.before:
+        Color:
+            rgba: (.0, 0.9, .1, .3) if self.selected else (.0, .0, .0, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
